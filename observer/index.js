@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var web_1 = require("./web");
+var phone_1 = require("./phone");
+var weather_station_1 = require("./weather-station");
+var webDisplay = new web_1.default();
+var phoneDisplay = new phone_1.default();
+var weatherStation = new weather_station_1.default();
+weatherStation.addObserver(webDisplay);
+weatherStation.addObserver(phoneDisplay);
+weatherStation.setTemperature(70);
+weatherStation.setHumidity(65);
+weatherStation.setPressure(29.65);

@@ -1,0 +1,15 @@
+"use strict";
+// import MessageService from "./message-servce";
+Object.defineProperty(exports, "__esModule", { value: true });
+// const messageService = new MessageService();
+// // messageService.on("authenticated", () => console.log("Authenticated"));
+// messageService.authenticate();
+// messageService.sendMessage("Hello");
+// import queuedMessageService from "./queued-message-service";
+// queuedMessageService.authenticate();
+// queuedMessageService.sendMessage("first message");
+// setTimeout(() => queuedMessageService.sendMessage("second message"), 2000);
+var stateful_message_service_1 = require("./state/stateful-message-service");
+stateful_message_service_1.statefulMessageService.authenticate();
+stateful_message_service_1.statefulMessageService.sendMessage("first message");
+setTimeout(function () { return stateful_message_service_1.statefulMessageService.sendMessage("second message"); }, 2000);
