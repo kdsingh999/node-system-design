@@ -2,9 +2,9 @@ import ProductStrategy from "./product-strategy";
 import { ProductDTO } from "./productDTO";
 
 class VariableProductStrategy implements ProductStrategy {
-  createProduct(product: ProductDTO): Product {
+  createProduct(product: ProductDTO): ProductDTO {
     console.log(product);
-    return;
+    return product;
   }
 
   priceCalculator(product: ProductDTO): number {
