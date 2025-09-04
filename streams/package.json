@@ -5,7 +5,8 @@
   "main": "src/index.ts",
   "scripts": {
     "start": "node dist/index.js",
-    "build":"tsc"
+    "build": "tsc",
+    "start:trace-gc": "node --trace-gc dist/index.js"
   },
   "keywords": [],
   "author": "",
