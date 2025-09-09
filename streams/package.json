@@ -12,7 +12,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^24.3.0",
+    "@types/multiparty": "^4.2.1",
+    "@types/node": "^24.3.0"
+  },
+  "dependencies": {
+    "multiparty": "^4.2.3",
     "typescript": "^5.9.2"
   }
 }

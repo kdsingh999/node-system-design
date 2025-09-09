@@ -1,12 +1,14 @@
 import { createServer } from "http";
-import { createReadStream, stat } from "fs";
+import { createReadStream, createWriteStream, stat } from "fs";
 import { promisify } from "util";
 import path from "path";
+import multiparty from "multiparty";
+import { PassThrough } from "stream";
 
 const fileInfo = promisify(stat);
 const filePath = path.join(process.cwd(), "src", "the-universe.mp4");
 
-export default createServer(async (req, res) => {
+const respondWithVideoStream = async (req: any, res: any) => {
   const { size } = await fileInfo(filePath);
   const range = req.headers.range;
 
@@ -33,6 +35,54 @@ export default createServer(async (req, res) => {
     });
 
     createReadStream(filePath).pipe(res);
+  }
+};
+
+export default createServer((req, res) => {
+  if (req.method == "POST") {
+    const form = new multiparty.Form();
+    form.on("part", (part) => {
+      const srcPath = path.join(process.cwd(), "src", `${part.filename}`);
+      const distPath = path.join(process.cwd(), "dist", `${part.filename}`);
+      const srcStream = createWriteStream(srcPath);
+      const distStream = createWriteStream(distPath);
+
+      const tee = new PassThrough();
+      part.pipe(tee);
+
+      tee.pipe(srcStream);
+      tee.pipe(distStream);
+      srcStream.on("close", () => {
+        res.writeHead(200, {
+          "Content-Type": "text/html",
+        });
+        res.end(`<h1>${part.filename} File was uploaded.</h1>`);
+      });
+      distStream.on("close", () => {
+        res.writeHead(200, {
+          "Content-Type": "text/html",
+        });
+        res.end(`<h1>${part.filename} File was uploaded.</h1>`);
+      });
+    });
+    form.parse(req);
+
+    // req.pipe(res);
+
+    // req.pipe(createWriteStream(srcPath));
+    // req.pipe(createWriteStream(distPath));
+  } else if (req.url === "/video") {
+    respondWithVideoStream(req, res);
+  } else {
+    res.writeHead(200, {
+      "Content-Type": "text/html",
+    });
+    res.end(`
+        <form enctype="multipart/form-data" method="POST" action="/">
+        <input type="file" name="upload-file" />
+        <button>Submit</button>
+        </form>
+        `);
   }
 }).listen(3000, () => {
   console.log("Server started on port 3000");
