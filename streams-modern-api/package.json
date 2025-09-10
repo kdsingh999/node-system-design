@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node dist/index.js",
-    "build": "tsc"
+    "build": "tsc",
+    "init": "node dist/init.js"
   },
   "keywords": [],
   "author": "",
@@ -14,5 +15,9 @@
   "devDependencies": {
     "@types/node": "^24.3.0",
     "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^10.0.0",
+    "sqlite3": "^5.1.7"
   }
 }
