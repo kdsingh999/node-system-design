@@ -1,15 +1,55 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Flex Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      .container {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        flex-wrap: wrap; /* allow wrapping */
+      }
+      .item {
+        flex: 1;
+        padding: 20px;
+        text-align: center;
+        border: 1px solid black;
+      }
+
+      /* 📱 Mobile (≤600px) → stacked full width */
+      @media (max-width: 600px) {
+        .container {
+          flex-direction: column;
+        }
+        .item {
+          flex: 1 1 100%;
+        }
+      }
+
+      /* 📲 Tablet (601px–900px) → 2 per row */
+      @media (min-width: 601px) and (max-width: 900px) {
+        .item {
+          flex: 1 1 48%; /* half width */
+        }
+        .item:nth-child(3) {
+          flex: 1 1 48%; /* third item stays half width */
+        }
+      }
+
+      /* 🖥️ Desktop (≥901px) → 3 in a row */
+      @media (min-width: 901px) {
+        .item {
+          flex: 1 1 30%; /* three per row */
+        }
+      }
+    </style>
+  </head>
   <body>
-    <h1>Video Streaming</h1>
-    <video width="640" height="360" controls autoplay>
-      <source
-        src="http://localhost:3000"
-        type="video/mp4"
-        controls="true"
-        autoplay
-      />
-      Your browser does not support HTML video.
-    </video>
+    <div class="container">
+      <div class="item">1</div>
+      <div class="item">2</div>
+      <div class="item">3</div>
+    </div>
   </body>
 </html>
