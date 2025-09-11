@@ -1,0 +1,26 @@
+.container {
+  max-width: 100%;
+  padding: 20px;
+  margin: auto;
+}
+
+.start-btn {
+  background-color: green;
+  color: white;
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 15px;
+}
+.close-btn {
+  background-color: red;
+  color: white;
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+  gap: 10px; /* space between columns */
+}
