@@ -29,19 +29,18 @@ function myTransform(getFirstFile, setFirstFile, resultStream) {
             src.on("data", (data) => {
                 buffer += data;
                 let lines = buffer.split("\n");
-                buffer = lines.pop() || ""; // keep last partial line
+                buffer = lines.pop() || "";
                 lines.forEach((element, index) => {
                     if (index === 0 && !getFirstFile()) {
-                        // skip header for all except first file
                         return;
                     }
                     if (element.trim()) {
-                        resultStream.write(element + "\n"); // ✅ FIX: write element, not lines
+                        resultStream.write(element + "\n");
                     }
                 });
             });
             src.on("end", () => {
-                setFirstFile(); // mark that we processed the first file
+                setFirstFile();
                 callback();
             });
             src.on("error", (err) => callback(err));
