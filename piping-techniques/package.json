@@ -5,6 +5,8 @@
   "main": "src/index.ts",
   "type": "module",
   "scripts": {
+    "start:forking": "node dist/forking-streams/index.js",
+    "start:merg": "node dist/merging-streams/index.js",
     "start": "node dist/index.js",
     "build": "tsc"
   },
