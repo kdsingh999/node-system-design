@@ -1,0 +1,71 @@
+import { createWriteStream, createReadStream } from "node:fs";
+import path from "node:path";
+import { Readable, Transform } from "node:stream";
+
+const resultCsv = path.join(process.cwd(), "src", "result.csv");
+const file1 = path.join(process.cwd(), "src", "f1.csv");
+const file2 = path.join(process.cwd(), "src", "f2.csv");
+const file3 = path.join(process.cwd(), "src", "f3.csv");
+
+function concatCSVFiles(resultFile: any, csvFiles: any) {
+  return new Promise((resolve: any, reject: any) => {
+    const resultStream = createWriteStream(resultFile);
+    let firstFile: boolean = true;
+
+    Readable.from(csvFiles)
+      .pipe(
+        myTransform(
+          () => firstFile,
+          () => {
+            firstFile = false;
+          },
+          resultStream
+        )
+      )
+      .on("error", reject)
+      .on("finish", () => {
+        resultStream.end();
+        resolve(true);
+      });
+  });
+}
+
+function myTransform(getFirstFile: any, setFirstFile: any, resultStream: any) {
+  return new Transform({
+    transform(chunk, encoding, callback) {
+      const src = createReadStream(chunk.toString(), { encoding: "utf-8" });
+      let buffer = "";
+      let isFirstLine = true;
+
+      src.on("data", (data: any) => {
+        buffer += data;
+        let lines = buffer.split("\n");
+        buffer = lines.pop() || "";
+
+        lines.forEach((element: string, index: number) => {
+          if (index === 0 && !getFirstFile()) {
+            return;
+          }
+
+          if (element.trim()) {
+            resultStream.write(element + "\n");
+          }
+        });
+      });
+
+      src.on("end", () => {
+        setFirstFile();
+        callback();
+      });
+
+      src.on("error", (err) => callback(err));
+    },
+    objectMode: true,
+  });
+}
+
+concatCSVFiles(resultCsv, [file1, file2, file3])
+  .then(() => console.log("CSV File merged successfully"))
+  .catch((err) => {
+    console.log("Error in merging files", err);
+  });

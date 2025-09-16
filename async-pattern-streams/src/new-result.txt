@@ -1,0 +1,3 @@
+Title:The Shawshank Redemption, Rating:9.3, Poster:shawshank.jpg
+Title:Inception, Rating:8.8, Poster:inception.jpg
+Title:Movie X, Rating:5, Poster:moviex.jpg

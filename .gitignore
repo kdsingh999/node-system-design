@@ -1,3 +1,12 @@
 event-emitter/node_modules
 notification-event/node_modules
 promises/node_modules
+streams/node_modules
+streams-project/node_modules
+streams-modern-api/node_modules
+web-streams/node_modules
+usecase-streams/node_modules
+frontend/node_modules
+async-pattern-streams/node_modules
+piping-techniques/node_modules
+pratics-stream-10gb/node_modules

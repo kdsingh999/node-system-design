@@ -1,0 +1,23 @@
+"use strict";
+// import runServer from "./buffer-transfer";
+// runServer();
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+// import runServer from "./streams-transfer";
+// runServer();
+// import readableStreams from "./readable-streams";
+// readableStreams();
+// import readStream from "./usecase-readable";
+// readStream;
+// import readStream from "./write-streams";
+// readStream;
+// import readStreams from "./pipe-streams";
+// readStreams;
+// import readStream from "./duplex-streams";
+// readStream;
+// import executeTransForm from "./transform-streams";
+// executeTransForm();
+const range_streams_1 = __importDefault(require("./range-streams"));
+range_streams_1.default;
