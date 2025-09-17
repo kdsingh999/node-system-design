@@ -1,0 +1,25 @@
+{
+  "name": "event-emitter",
+  "version": "1.0.0",
+  "description": "",
+  "directories": {
+    "man": "src"
+  },
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "@types/log-update": "^2.0.0",
+    "child_process": "^1.0.2",
+    "log-update": "^6.1.0"
+  }
+}
