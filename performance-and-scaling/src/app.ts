@@ -23,13 +23,14 @@ const server = http.createServer((req, res) => {
   const joke = articles[randomIndex];
 
   const responsePayload = JSON.stringify({
-    joke,
-    port,
+    joke: joke.title,
     processID: process.pid,
   });
+  console.log(`A joke from ${process.pid}: ${joke.title}`);
+
   res.writeHead(200, { "Content-Type": "application/json" });
   res.end(responsePayload);
 });
-server.listen(port, () => {
-  console.log(`Joke server is running on port ${port}`);
+server.listen(3000, () => {
+  console.log(`Joke server is running on port 3000`);
 });
