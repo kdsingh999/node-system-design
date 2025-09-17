@@ -21,14 +21,23 @@ if (cluster.isMaster) {
   for (let i = 0; i < cpuCount; i++) {
     cluster.fork();
   }
-    
+  cluster.on("exit", (worker: any) => {
+    console.log(`Worker process ${process.pid} just killed`);
+    console.log(`${Object.keys(cluster.workers as any).length} are remaining.`);
+    console.log("starting a new process worker");
+    cluster.fork();
+  });
 } else {
   console.log(`started a worker process at ${process.pid}.`);
   http
     .createServer((req, res) => {
-      const msg = `This is a worker process with pidid:${process.pid}`;
-      console.log(msg);
-      res.end(msg);
+      res.end(`Process:${process.pid}`);
+
+      if (req.url === "/kill") {
+        process.exit();
+      } else if (req.url === "/") {
+        console.log(`Serving requests from ${process.pid}`);
+      }
     })
     .listen(3000);
 }

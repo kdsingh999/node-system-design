@@ -10,6 +10,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //   fork("./dist/app.js", ["3003"]),
 // ];
 // console.log(`Forked ${process.length} processes`);
+//npm i loadtest -g
 const os_1 = __importDefault(require("os"));
 const cluster_1 = __importDefault(require("cluster"));
 const http_1 = __importDefault(require("http"));
@@ -20,13 +21,24 @@ if (cluster_1.default.isMaster) {
     for (let i = 0; i < cpuCount; i++) {
         cluster_1.default.fork();
     }
+    cluster_1.default.on("exit", (worker) => {
+        console.log(`Worker process ${process.pid} just killed`);
+        console.log(`${Object.keys(cluster_1.default.workers).length} are remaining.`);
+        console.log("starting a new process worker");
+        cluster_1.default.fork();
+    });
 }
 else {
+    console.log(`started a worker process at ${process.pid}.`);
     http_1.default
         .createServer((req, res) => {
-        const msg = `This is a worker process with pidid:${process.pid}`;
-        console.log(msg);
-        res.end(msg);
+        res.end(`Process:${process.pid}`);
+        if (req.url === "/kill") {
+            process.exit();
+        }
+        else if (req.url === "/") {
+            console.log(`Serving requests from ${process.pid}`);
+        }
     })
         .listen(3000);
 }
